@@ -2,7 +2,6 @@ package mockhttp
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/require"
 	"io"
 	"net"
 	"net/http"
@@ -10,10 +9,12 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/require"
 )
 
-func TestName(t *testing.T) {
-	t.Run("start mock server at specify port", func(t *testing.T) {
+func TestMockServer(t *testing.T) {
+	t.Run("start mock server at specified port", func(t *testing.T) {
 		ms := NewMockServer(WithPort(60000))
 		ms.Start(t)
 		defer ms.Teardown()
@@ -47,7 +48,10 @@ func TestName(t *testing.T) {
 		ms.Start(mockT)
 		defer ms.Teardown()
 
-		_, _ = http.Post("http://localhost:60000/foo", "", nil)
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
+		_, _ = http.Post(fmt.Sprintf("%s/foo", url), "", nil)
 
 		require.True(t, mockT.Failed())
 	})
@@ -60,9 +64,12 @@ func TestName(t *testing.T) {
 		ms.Start(t)
 		defer ms.Teardown()
 
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
 		var response *http.Response
 		require.Eventually(t, func() bool {
-			r, err := http.Get("http://localhost:60000/get")
+			r, err := http.Get(fmt.Sprintf("%s/get", url))
 			if err != nil {
 				return false
 			}
@@ -84,9 +91,12 @@ func TestName(t *testing.T) {
 		ms.Start(t)
 		defer ms.Teardown()
 
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
 		var response *http.Response
 		require.Eventually(t, func() bool {
-			r, err := http.Post("http://localhost:60000/post", "text/html", nil)
+			r, err := http.Post(fmt.Sprintf("%s/post", url), "text/html", nil)
 			if err != nil {
 				return false
 			}
@@ -116,9 +126,12 @@ func TestName(t *testing.T) {
 		ms.Start(t)
 		defer ms.Teardown()
 
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
 		var response *http.Response
 		require.Eventually(t, func() bool {
-			r, err := http.Get("http://localhost:60000/get")
+			r, err := http.Get(fmt.Sprintf("%s/get", url))
 			if err != nil {
 				return false
 			}
@@ -143,9 +156,12 @@ func TestName(t *testing.T) {
 		ms.Start(t)
 		defer ms.Teardown()
 
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
 		var response *http.Response
 		require.Eventually(t, func() bool {
-			r, err := http.Get("http://localhost:60000/get")
+			r, err := http.Get(fmt.Sprintf("%s/get", url))
 			if err != nil {
 				return false
 			}
@@ -174,9 +190,12 @@ func TestName(t *testing.T) {
 		ms.Start(t)
 		defer ms.Teardown()
 
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
 		var response *http.Response
 		require.Eventually(t, func() bool {
-			r, err := http.Get("http://localhost:60000/get?foo=bar")
+			r, err := http.Get(fmt.Sprintf("%s/get?foo=bar", url))
 			if err != nil {
 				return false
 			}
@@ -200,7 +219,10 @@ func TestName(t *testing.T) {
 		ms.Start(t)
 		defer ms.Teardown()
 
-		request, err := http.NewRequest(http.MethodGet, "http://localhost:60000/get", nil)
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
+		request, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s/get", url), nil)
 		require.NoError(t, err)
 
 		request.Header.Set("X-App", "foo")
@@ -232,8 +254,11 @@ func TestName(t *testing.T) {
 		ms.Start(t)
 		defer ms.Teardown()
 
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
 		bodyReader := strings.NewReader(jsonBody)
-		request, err := http.NewRequest(http.MethodPost, "http://localhost:60000/post", bodyReader)
+		request, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/post", url), bodyReader)
 		require.NoError(t, err)
 
 		var response *http.Response
@@ -257,9 +282,12 @@ func TestName(t *testing.T) {
 		ms.Start(t)
 		defer ms.Teardown()
 
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
 		var response *http.Response
 		require.Eventually(t, func() bool {
-			r, err := http.Get("http://localhost:60000/get")
+			r, err := http.Get(fmt.Sprintf("%s/get", url))
 			if err != nil {
 				return false
 			}
@@ -286,9 +314,12 @@ func TestName(t *testing.T) {
 		ms.Start(mockT)
 		defer ms.Teardown()
 
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
 		var response *http.Response
 		require.Eventually(t, func() bool {
-			r, err := http.Get("http://localhost:60000/get")
+			r, err := http.Get(fmt.Sprintf("%s/get", url))
 			if err != nil {
 				return false
 			}
@@ -313,9 +344,12 @@ func TestName(t *testing.T) {
 		ms.Start(mockT)
 		defer ms.Teardown()
 
+		url := ms.URL()
+		require.Equal(t, "http://localhost:60000", url)
+
 		var response *http.Response
 		require.Eventually(t, func() bool {
-			r, err := http.Get("http://localhost:60000/get")
+			r, err := http.Get(fmt.Sprintf("%s/get", url))
 			if err != nil {
 				return false
 			}

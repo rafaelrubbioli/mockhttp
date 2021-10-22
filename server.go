@@ -2,12 +2,13 @@ package mockhttp
 
 import (
 	"fmt"
-	"github.com/go-chi/chi/v5"
 	"net"
 	"net/http"
 	"net/http/httptest"
 	"sync"
 	"testing"
+
+	"github.com/go-chi/chi/v5"
 )
 
 // Option represents a MockServer configuration.
@@ -82,6 +83,11 @@ func (ms *MockServer) Port() int {
 	}
 
 	return addr.Port
+}
+
+// URL returns the MockServer URL.
+func (ms *MockServer) URL() string {
+	return fmt.Sprintf("http://localhost:%d", ms.Port())
 }
 
 // AssertExpectations verifies that every registered endpoint was called at least once.
