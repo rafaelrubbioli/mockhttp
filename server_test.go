@@ -19,7 +19,7 @@ func TestMockServer(t *testing.T) {
 		ms.Start(t)
 		defer ms.Teardown()
 
-		addr := "localhost:60000"
+		addr := "127.0.0.1:60000"
 		require.Eventually(t, func() bool {
 			_, err := net.Dial("tcp", addr)
 			return err == nil
@@ -31,7 +31,7 @@ func TestMockServer(t *testing.T) {
 		ms.Start(t)
 		defer ms.Teardown()
 
-		addr := fmt.Sprintf("localhost:%d", ms.Port())
+		addr := fmt.Sprintf("127.0.0.1:%d", ms.Port())
 		require.Eventually(t, func() bool {
 			_, err := net.Dial("tcp", addr)
 			return err == nil
@@ -49,7 +49,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		_, _ = http.Post(fmt.Sprintf("%s/foo", url), "", nil)
 
@@ -65,7 +65,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		var response *http.Response
 		require.Eventually(t, func() bool {
@@ -92,7 +92,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		var response *http.Response
 		require.Eventually(t, func() bool {
@@ -127,7 +127,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		var response *http.Response
 		require.Eventually(t, func() bool {
@@ -157,7 +157,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		var response *http.Response
 		require.Eventually(t, func() bool {
@@ -191,7 +191,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		var response *http.Response
 		require.Eventually(t, func() bool {
@@ -220,7 +220,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		request, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s/get", url), nil)
 		require.NoError(t, err)
@@ -255,7 +255,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		bodyReader := strings.NewReader(jsonBody)
 		request, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/post", url), bodyReader)
@@ -283,7 +283,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		var response *http.Response
 		require.Eventually(t, func() bool {
@@ -315,7 +315,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		var response *http.Response
 		require.Eventually(t, func() bool {
@@ -345,7 +345,7 @@ func TestMockServer(t *testing.T) {
 		defer ms.Teardown()
 
 		url := ms.URL()
-		require.Equal(t, "http://localhost:60000", url)
+		require.Equal(t, "http://127.0.0.1:60000", url)
 
 		var response *http.Response
 		require.Eventually(t, func() bool {

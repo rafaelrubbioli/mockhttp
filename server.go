@@ -86,8 +86,9 @@ func (ms *MockServer) Port() int {
 }
 
 // URL returns the MockServer URL.
+// Value is http://127.0.0.1:<server port>
 func (ms *MockServer) URL() string {
-	return fmt.Sprintf("http://localhost:%d", ms.Port())
+	return fmt.Sprintf("http://127.0.0.1:%d", ms.Port())
 }
 
 // AssertExpectations verifies that every registered endpoint was called at least once.
